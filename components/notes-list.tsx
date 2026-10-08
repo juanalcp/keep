@@ -68,6 +68,7 @@ export function NotesList({ notes }: { notes: Note[] }) {
         keyExtractor={(note) => note.id}
         renderItem={renderNote}
         ListEmptyComponent={EmptyNotes}
+        maintainVisibleContentPosition={{ disabled: true }}
         style={{ flex: 1 }}
       />
     </View>
