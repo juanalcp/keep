@@ -9,12 +9,12 @@ On-device notes for iOS and Android. The app is a React Native project on Expo's
 - `react-native-mmkv` for on-device storage
 - Jest (`jest-expo`) and React Native Testing Library
 - ESLint and Prettier
-- GitHub Actions on Ubuntu for lint, typecheck, and tests
+- GitHub Actions on Ubuntu for lint, typecheck, and tests (`pnpm install --frozen-lockfile`)
 
 ## Prerequisites
 
 - Node.js 22
-- npm
+- pnpm 10 (`package.json` pins `pnpm@10.33.3`)
 - Xcode, for the iOS simulator
 - Android Studio with an emulator, for Android
 
@@ -25,7 +25,7 @@ This app does not run in Expo Go. `react-native-mmkv` ships native code, and Exp
 ## Install
 
 ```bash
-npm install
+pnpm install
 ```
 
 ## Run a development build
@@ -35,7 +35,7 @@ The first build compiles the native app, including `expo-dev-client`, and takes 
 ### iOS simulator
 
 ```bash
-npx expo run:ios
+pnpm exec expo run:ios
 ```
 
 ### Android emulator
@@ -43,18 +43,18 @@ npx expo run:ios
 Start an emulator, then:
 
 ```bash
-npx expo run:android
+pnpm exec expo run:android
 ```
 
-After the development build is installed, `npm start` opens the Metro bundler for that build.
+After the development build is installed, `pnpm start` opens the Metro bundler for that build.
 
 ## Local checks
 
 ```bash
-npm run lint
-npm run typecheck
-npm test
-npm run format
+pnpm run lint
+pnpm run typecheck
+pnpm test
+pnpm run format
 ```
 
 `typecheck` is `tsc --noEmit`. `format` rewrites files with Prettier and is not part of CI. CI does not compile the native iOS or Android apps.
