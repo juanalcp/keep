@@ -85,15 +85,10 @@ If the key is missing, the JSON is invalid, the value is not an array, or any el
 Any change to the interface, layout, styles, routes, client state, or rendered data is tested in the browser **with the window in mobile size** before the work is done. A Jest test does not replace this check.
 
 1. Start the web app with `pnpm run web` and open `http://localhost:8081`.
-2. Set the browser window to phone size (a viewport width of about 390 px, for example 390×844). A full desktop screenshot is not enough.
+2. Set the browser window to phone size (a viewport width of about 390 px, for example 390×844). A wide desktop window does not count as this check.
 3. Walk the affected flow the way someone on a phone would: tap, type, submit, and navigate. Also check routes that share the touched state or components, the empty state, and the error state (including an unknown route).
 4. Confirm that the «Keep» header, the background, and the content area read at that width, with no horizontal overflow.
 
-## Pull request illustrations
+## Pull requests
 
-The pull request body has to show that mobile check. Include at least:
-
-- a screenshot of the browser window at mobile size with the affected screen visible, and
-- a short recording of the same flow in that mobile window when there is interaction (navigation, forms, or state changes).
-
-Reference the files with HTML image or video tags and a caption that says the window was in mobile size. Do not upload wide desktop screenshots, install logs, or a failed attempt.
+Describe the change and the check in text. Do not include images, screenshots, recordings, or HTML image or video tags in the pull request body. That evidence slows the work down and is not part of the delivery.
