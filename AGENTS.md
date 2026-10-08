@@ -74,15 +74,10 @@ Si falta la clave, el JSON es inválido, el valor no es un array o algún elemen
 Cualquier cambio de interfaz, layout, estilos, rutas, estado de cliente o datos renderizados se prueba en el navegador **con la ventana en modo móvil** antes de dar el trabajo por hecho. Un test de Jest no sustituye esta prueba.
 
 1. Arranca la web con `pnpm run web` y abre `http://localhost:8081`.
-2. Pon la ventana del navegador en tamaño de teléfono (anchura de viewport de unos 390 px, por ejemplo 390×844). No basta una captura a pantalla completa de escritorio.
+2. Pon la ventana del navegador en tamaño de teléfono (anchura de viewport de unos 390 px, por ejemplo 390×844). Una ventana de escritorio ancha no sirve para esta prueba.
 3. Recorre el flujo afectado como lo haría alguien en el móvil: tocar, escribir, enviar y navegar. Comprueba también las rutas que comparten el estado o los componentes tocados, el estado vacío y el de error (incluida una ruta inexistente).
 4. Confirma que la cabecera «Keep», el fondo y el área de contenido se leen en esa anchura, sin desbordes horizontales.
 
-## Ilustraciones en el pull request
+## Pull requests
 
-El cuerpo del pull request tiene que demostrar esa prueba móvil. Incluye al menos:
-
-- una captura de la ventana del navegador en tamaño móvil con la pantalla afectada visible, y
-- una grabación corta del mismo flujo en esa ventana móvil cuando haya interacción (navegación, formularios o cambios de estado).
-
-Referencia los archivos con etiquetas HTML de imagen o vídeo y una leyenda que diga que la ventana estaba en modo móvil. No subas capturas del escritorio ancho, de la instalación ni de un intento fallido.
+Describe el cambio y la prueba en texto. No incluyas imágenes, capturas, grabaciones ni etiquetas HTML de imagen o vídeo en el cuerpo del pull request. Esa evidencia alarga el trabajo y no forma parte de la entrega.
