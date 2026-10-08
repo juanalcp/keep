@@ -1,5 +1,5 @@
-## Resumen
+## Summary
 
-## Pruebas
+## Checks
 
-Describe en texto cómo comprobaste el cambio. No adjuntes capturas ni vídeos.
+Describe in text how you verified the change. Do not attach screenshots or videos.
