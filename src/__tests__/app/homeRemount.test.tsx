@@ -28,8 +28,8 @@ describe('HomeScreen remount', () => {
   it('shows a note that was already stored when the screen mounts again', async () => {
     saveNote({
       id: 'stored-note',
-      title: 'Compras',
-      content: 'leche\n pan',
+      title: 'Shopping',
+      content: 'milk\n bread',
       createdAt: '2026-10-08T12:00:00.000Z',
       updatedAt: '2026-10-08T12:00:00.000Z',
     });
@@ -38,7 +38,7 @@ describe('HomeScreen remount', () => {
     jest.useRealTimers();
 
     expect(screen.getByText('Keep')).toBeTruthy();
-    expect(screen.getByTestId('note-title')).toHaveTextContent('Compras');
-    expect(screen.getByTestId('note-content')).toHaveTextContent('leche\n pan');
+    expect(screen.getByTestId('note-title')).toHaveTextContent('Shopping');
+    expect(screen.getByTestId('note-content')).toHaveTextContent('milk\n bread');
   });
 });

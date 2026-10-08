@@ -1,88 +1,99 @@
 # AGENTS.md
 
-Guía para agentes que trabajan en Keep. Léela antes de cambiar código, abrir un pull request o dar una tarea por terminada.
+Guide for agents working on Keep. Read it before changing code, opening a pull request, or marking a task done.
 
-## Qué es el proyecto
+## Language
 
-Keep es una app de notas en el dispositivo para iOS y Android. Es un proyecto React Native en el flujo gestionado de Expo, con un solo código para ambas plataformas. Las notas viven en MMKV. No hay backend, cuentas ni sincronización.
+Write identifiers, comments, user-facing copy, accessibility labels, placeholders, and strings in tests in English. Keep library names, product names, and protocol terms as they are.
+
+## What the project is
+
+Keep is an on-device notes app for iOS and Android. It is a React Native project on Expo's managed workflow, with one codebase for both platforms. Notes live in MMKV. There is no backend, no accounts, and no sync.
 
 ## Stack
 
-- Expo SDK 57 (managed workflow), Expo Router y TypeScript (`strict`)
-- React 19.2 y React Native 0.86
-- React Native Reusables sobre NativeWind 4 (clases de Tailwind). `components.json` usa el estilo `new-york`, color base `neutral` y variables CSS
-- `react-native-mmkv` (y `react-native-nitro-modules`) para el almacenamiento local
-- Jest (`jest-expo`) y React Native Testing Library
-- ESLint (`eslint-config-expo` + Prettier) y Prettier (`printWidth` 100, comillas simples, plugin de Tailwind)
-- GitHub Actions en Ubuntu: lint, typecheck y tests con `pnpm install --frozen-lockfile`
-- Gestor de paquetes fijado: `pnpm@10.33.3`. Node.js 22
+- Expo SDK 57 (managed workflow), Expo Router, and TypeScript (`strict`)
+- React 19.2 and React Native 0.86
+- React Native Reusables on NativeWind 4 (Tailwind classes). `components.json` uses the `new-york` style, `neutral` base color, and CSS variables
+- `react-native-mmkv` (and `react-native-nitro-modules`) for local storage
+- Jest (`jest-expo`) and React Native Testing Library
+- ESLint (`eslint-config-expo` + Prettier) and Prettier (`printWidth` 100, single quotes, Tailwind plugin)
+- GitHub Actions on Ubuntu: lint, typecheck, and tests with `pnpm install --frozen-lockfile`
+- Pinned package manager: `pnpm@10.33.3`. Node.js 22
 
-Alias de TypeScript: `@/*` apunta a la raíz del repo.
+TypeScript alias: `@/*` points at the repo root.
 
-## Expo Go no está soportado
+## Expo Go is not supported
 
-La app no corre en Expo Go. `react-native-mmkv` incluye código nativo y Expo Go no trae ese módulo. En dispositivo o simulador hay que usar un development build (`expo-dev-client`).
+The app does not run in Expo Go. `react-native-mmkv` includes native code, and Expo Go does not ship that module. On a device or simulator, use a development build (`expo-dev-client`).
 
-La web (`pnpm run web`) sí arranca en el navegador con Metro. Sirve para revisar la interfaz. El repositorio de notas sigue dependiendo de MMKV y no es el almacén de la versión web.
+Web (`pnpm run web`) does start in the browser with Metro. Use it to review the interface. The notes repository still depends on MMKV and is not the store for the web build.
 
-## Comandos
+## Commands
 
 ```bash
 pnpm install
-pnpm start                  # Metro para un development build ya instalado
-pnpm exec expo run:ios      # simulador iOS (primera vez compila nativo)
-pnpm exec expo run:android  # emulador Android ya iniciado
-pnpm run web                # Metro en web: http://localhost:8081
+pnpm start                  # Metro for an already installed development build
+pnpm exec expo run:ios      # iOS simulator (the first run compiles native code)
+pnpm exec expo run:android  # Android emulator that is already running
+pnpm run web                # Metro on web: http://localhost:8081
 pnpm run lint
 pnpm run typecheck          # tsc --noEmit
 pnpm test
-pnpm run format             # reescribe con Prettier; no forma parte de CI
+pnpm run format             # rewrites with Prettier; not part of CI
 ```
 
-CI (`.github/workflows/ci.yml`) corre en `push` a `main` y en pull requests: install congelado, lint, typecheck y tests. CI no compila las apps nativas de iOS ni Android.
+CI (`.github/workflows/ci.yml`) runs on `push` to `main` and on pull requests: frozen install, lint, typecheck, and tests. CI does not compile the native iOS or Android apps.
 
-## Estructura
+## Structure
 
-- `app/index.tsx` — pantalla de inicio provisional en `/`. Cabecera «Keep» y un área de notas vacía. No hay botones ni texto de estado vacío.
-- `app/_layout.tsx` — layout raíz: CSS global, tema de navegación, barra de estado, stack sin cabecera y `PortalHost`. En nativo el esquema de color sigue al sistema. En web solo aplica `light` o `dark` reales de `Appearance`, porque el modo `system` de NativeWind quita la clase `dark`.
-- `app/+not-found.tsx` — ruta desconocida: «This screen does not exist.» y un enlace a `/`.
-- `app/+html.tsx` — HTML raíz solo para web (viewport y reset de scroll).
-- `components/ui/text.tsx` — `Text` de React Native Reusables (variantes tipográficas y roles de accesibilidad).
-- `components/ui/button.tsx` — `Button` con variantes y tamaños. La pantalla de inicio todavía no lo usa.
-- `components/ui/icon.tsx` — iconos Lucide con `className` de NativeWind.
-- `lib/theme.ts` — tokens claro/oscuro y `NAV_THEME` para React Navigation.
+- `app/index.tsx` — home screen at `/`. Header «Keep», a "Create a note..." control, and a newest-first list. An empty list has no empty-state message.
+- `app/new-note.tsx` — form sheet for writing a note. Dismissing it saves the note when the title or the body has text.
+- `app/_layout.tsx` — root layout: global CSS, navigation theme, status bar, headerless stack, and `PortalHost`. The new-note route is a form sheet. On native, the color scheme follows the system. On web, only a real `light` or `dark` value from `Appearance` is applied, because NativeWind's `system` mode removes the `dark` class.
+- `app/+not-found.tsx` — unknown route: «This screen does not exist.» and a link to `/`.
+- `app/+html.tsx` — root HTML for web only (viewport and scroll reset).
+- `components/notes-list.tsx` — newest-first list of saved notes.
+- `components/ui/text.tsx` — React Native Reusables `Text` (type variants and accessibility roles).
+- `components/ui/button.tsx` — `Button` with variants and sizes.
+- `components/ui/input.tsx` and `components/ui/textarea.tsx` — fields used by the note composer.
+- `components/ui/icon.tsx` — Lucide icons with a NativeWind `className`.
+- `lib/theme.ts` — light/dark tokens and `NAV_THEME` for React Navigation.
 - `lib/utils.ts` — `cn` (`clsx` + `tailwind-merge`).
-- `global.css` — variables de color de Tailwind para claro y oscuro.
-- `src/types/Note.ts` — una nota: `id`, `title`, `content`, `createdAt` y `updatedAt`, todos `string`. Las fechas son ISO-8601.
-- `src/storage/notesRepository.ts` — único sitio que habla con MMKV.
-- `src/__tests__/app/index.test.tsx` — la home muestra «Keep» y ningún botón ni mensaje de vacío.
-- `src/__tests__/storage/notesRepository.test.ts` — listar, guardar, reemplazar, borrar y almacenamiento corrupto.
-- `jest.setup.js` — mock en memoria de `createMMKV`.
+- `global.css` — Tailwind color variables for light and dark.
+- `src/types/Note.ts` — a note: `id`, `title`, `content`, `createdAt`, and `updatedAt`, all `string`. Dates are ISO-8601.
+- `src/notes/newNote.ts` — builds a note from a draft and commits it. The caller does not import MMKV.
+- `src/notes/notesNewestFirst.ts` — orders notes newest first.
+- `src/storage/notesRepository.ts` — the only place that talks to MMKV.
+- `src/__tests__/app/index.test.tsx` — home shows «Keep» and creating a note from the composer.
+- `src/__tests__/app/homeRemount.test.tsx` — a stored note is visible when home mounts again.
+- `src/__tests__/notes/newNote.test.ts` — draft trimming, commit, and newest-first order.
+- `src/__tests__/storage/notesRepository.test.ts` — list, save, replace, delete, and corrupt storage.
+- `jest.setup.js` — in-memory mock of `createMMKV`.
 
-## Almacenamiento
+## Storage
 
-`notesRepository` guarda todas las notas como un único array JSON bajo la clave `notes`.
+`notesRepository` stores every note as one JSON array under the key `notes`.
 
-- `listNotes()` devuelve el array.
-- `saveNote(note)` inserta o reemplaza por `id`. El llamador pasa la nota completa. El repositorio no genera ids ni fechas.
-- `deleteNote(id)` quita esa nota. Si el id no existe, no escribe. Si el payload está corrupto y el id no existe, deja el valor crudo como estaba.
+- `listNotes()` returns the array.
+- `saveNote(note)` inserts or replaces by `id`. The caller passes the complete note. The repository does not generate ids or dates.
+- `deleteNote(id)` removes that note. If the id does not exist, it does not write. If the payload is corrupt and the id does not exist, it leaves the raw value as it was.
 
-Si falta la clave, el JSON es inválido, el valor no es un array o algún elemento no es un objeto con esos cinco campos de tipo string, `listNotes` devuelve una lista vacía. No lanza. No conserva los elementos válidos de un payload mezclado.
+If the key is missing, the JSON is invalid, the value is not an array, or any element is not an object with those five string fields, `listNotes` returns an empty list. It does not throw. It does not keep the valid items from a mixed payload.
 
-## Pruebas en el navegador (obligatorias)
+## Browser checks (required)
 
-Cualquier cambio de interfaz, layout, estilos, rutas, estado de cliente o datos renderizados se prueba en el navegador **con la ventana en modo móvil** antes de dar el trabajo por hecho. Un test de Jest no sustituye esta prueba.
+Any change to the interface, layout, styles, routes, client state, or rendered data is tested in the browser **with the window in mobile size** before the work is done. A Jest test does not replace this check.
 
-1. Arranca la web con `pnpm run web` y abre `http://localhost:8081`.
-2. Pon la ventana del navegador en tamaño de teléfono (anchura de viewport de unos 390 px, por ejemplo 390×844). No basta una captura a pantalla completa de escritorio.
-3. Recorre el flujo afectado como lo haría alguien en el móvil: tocar, escribir, enviar y navegar. Comprueba también las rutas que comparten el estado o los componentes tocados, el estado vacío y el de error (incluida una ruta inexistente).
-4. Confirma que la cabecera «Keep», el fondo y el área de contenido se leen en esa anchura, sin desbordes horizontales.
+1. Start the web app with `pnpm run web` and open `http://localhost:8081`.
+2. Set the browser window to phone size (a viewport width of about 390 px, for example 390×844). A full desktop screenshot is not enough.
+3. Walk the affected flow the way someone on a phone would: tap, type, submit, and navigate. Also check routes that share the touched state or components, the empty state, and the error state (including an unknown route).
+4. Confirm that the «Keep» header, the background, and the content area read at that width, with no horizontal overflow.
 
-## Ilustraciones en el pull request
+## Pull request illustrations
 
-El cuerpo del pull request tiene que demostrar esa prueba móvil. Incluye al menos:
+The pull request body has to show that mobile check. Include at least:
 
-- una captura de la ventana del navegador en tamaño móvil con la pantalla afectada visible, y
-- una grabación corta del mismo flujo en esa ventana móvil cuando haya interacción (navegación, formularios o cambios de estado).
+- a screenshot of the browser window at mobile size with the affected screen visible, and
+- a short recording of the same flow in that mobile window when there is interaction (navigation, forms, or state changes).
 
-Referencia los archivos con etiquetas HTML de imagen o vídeo y una leyenda que diga que la ventana estaba en modo móvil. No subas capturas del escritorio ancho, de la instalación ni de un intento fallido.
+Reference the files with HTML image or video tags and a caption that says the window was in mobile size. Do not upload wide desktop screenshots, install logs, or a failed attempt.
