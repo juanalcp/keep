@@ -144,22 +144,51 @@ describe('commitNewNote', () => {
 });
 
 describe('notesNewestFirst', () => {
-  const note = (id: string, createdAt: string): Note => ({
-    id,
-    title: id,
+  const note = (overrides: Partial<Note> & Pick<Note, 'id'>): Note => ({
+    title: overrides.id,
     content: '',
-    createdAt,
-    updatedAt: createdAt,
+    createdAt: '2026-10-08T10:00:00.000Z',
+    updatedAt: '2026-10-08T10:00:00.000Z',
+    ...overrides,
   });
 
-  it('orders notes newest first and breaks timestamp ties by later insert', () => {
-    expect(
-      notesNewestFirst([
-        note('old', '2026-10-08T10:00:00.000Z'),
-        note('same-a', '2026-10-08T12:00:00.000Z'),
-        note('same-b', '2026-10-08T12:00:00.000Z'),
-        note('mid', '2026-10-08T11:00:00.000Z'),
-      ]).map((item) => item.id)
-    ).toEqual(['same-b', 'same-a', 'mid', 'old']);
+  it('orders by updatedAt, then createdAt, then id, without mutating the input', () => {
+    const notes = [
+      note({
+        id: 'low',
+        updatedAt: '2026-10-08T12:00:00.000Z',
+        createdAt: '2026-10-08T09:00:00.000Z',
+      }),
+      note({
+        id: 'z-late-insert',
+        updatedAt: '2026-10-08T11:00:00.000Z',
+        createdAt: '2026-10-08T11:00:00.000Z',
+      }),
+      note({
+        id: 'm',
+        updatedAt: '2026-10-08T12:00:00.000Z',
+        createdAt: '2026-10-08T08:00:00.000Z',
+      }),
+      note({
+        id: 'a-early-insert',
+        updatedAt: '2026-10-08T11:00:00.000Z',
+        createdAt: '2026-10-08T11:00:00.000Z',
+      }),
+      note({
+        id: 'newer-created',
+        updatedAt: '2026-10-08T11:00:00.000Z',
+        createdAt: '2026-10-08T11:30:00.000Z',
+      }),
+    ];
+    const original = notes.map((item) => item.id);
+
+    expect(notesNewestFirst(notes).map((item) => item.id)).toEqual([
+      'low',
+      'm',
+      'newer-created',
+      'z-late-insert',
+      'a-early-insert',
+    ]);
+    expect(notes.map((item) => item.id)).toEqual(original);
   });
 });
