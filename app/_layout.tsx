@@ -8,7 +8,7 @@ import { useColorScheme } from 'nativewind';
 import * as React from 'react';
 import { Appearance, Platform } from 'react-native';
 
-import { NAV_THEME } from '@/lib/theme';
+import { NAV_THEME, THEME } from '@/lib/theme';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -40,10 +40,26 @@ export default function RootLayout() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const scheme = colorScheme === 'dark' ? 'dark' : 'light';
+
   return (
-    <ThemeProvider value={NAV_THEME[colorScheme ?? 'light']}>
-      <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
-      <Stack screenOptions={{ headerShown: false }} />
+    <ThemeProvider value={NAV_THEME[scheme]}>
+      <StatusBar style={scheme === 'dark' ? 'light' : 'dark'} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="new-note"
+          options={{
+            presentation: 'formSheet',
+            headerShown: false,
+            sheetGrabberVisible: true,
+            sheetAllowedDetents: [0.85, 1],
+            sheetInitialDetentIndex: 0,
+            sheetCornerRadius: 20,
+            contentStyle: { backgroundColor: THEME[scheme].background },
+          }}
+        />
+      </Stack>
       <PortalHost />
     </ThemeProvider>
   );

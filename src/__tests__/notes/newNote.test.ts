@@ -1,0 +1,164 @@
+import { buildNoteFromDraft, commitNewNote, createNoteId } from '@/src/notes/newNote';
+import { notesNewestFirst } from '@/src/notes/notesNewestFirst';
+import type { Note } from '@/src/types/Note';
+
+const now = new Date('2026-10-08T12:00:00.000Z');
+
+describe('buildNoteFromDraft', () => {
+  it('returns null when both fields are empty or whitespace', () => {
+    expect(buildNoteFromDraft({ title: '', content: '' })).toBeNull();
+    expect(buildNoteFromDraft({ title: '   ', content: '\n\n' })).toBeNull();
+    expect(buildNoteFromDraft({ title: ' \n ', content: ' \t ' })).toBeNull();
+  });
+
+  it('trims the ends and keeps whitespace in the middle', () => {
+    expect(
+      buildNoteFromDraft(
+        { title: '  hola   mundo  ', content: '  línea\n  dos  ' },
+        { id: 'note-1', now }
+      )
+    ).toEqual({
+      id: 'note-1',
+      title: 'hola   mundo',
+      content: 'línea\n  dos',
+      createdAt: '2026-10-08T12:00:00.000Z',
+      updatedAt: '2026-10-08T12:00:00.000Z',
+    });
+  });
+
+  it('saves a title without a body and a body without a title', () => {
+    expect(
+      buildNoteFromDraft({ title: ' Título ', content: '  ' }, { id: 'a', now })
+    ).toMatchObject({ title: 'Título', content: '' });
+    expect(buildNoteFromDraft({ title: '\n', content: ' Texto ' }, { id: 'b', now })).toMatchObject(
+      { title: '', content: 'Texto' }
+    );
+  });
+
+  it('uses a new id that is not derived from the title', () => {
+    const first = buildNoteFromDraft({ title: 'Misma', content: '' }, { now });
+    const second = buildNoteFromDraft({ title: 'Misma', content: '' }, { now });
+
+    expect(first?.id).toEqual(expect.any(String));
+    expect(first?.id).not.toBe(second?.id);
+    expect(first?.id).not.toBe('Misma');
+    expect(createNoteId()).not.toBe(createNoteId());
+  });
+});
+
+describe('commitNewNote', () => {
+  const state = () => ({ committed: false, pending: false });
+
+  it('discards an empty draft without writing', () => {
+    const writes: Note[] = [];
+    const session = state();
+
+    expect(
+      commitNewNote({ title: '  ', content: '\n' }, session, (note) => {
+        writes.push(note);
+      })
+    ).toBe('discarded');
+    expect(writes).toEqual([]);
+    expect(session.committed).toBe(false);
+  });
+
+  it('writes one note for one dismiss and ignores a second dismiss', () => {
+    const writes: Note[] = [];
+    const session = state();
+    const draft = { title: 'Una', content: 'Nota' };
+    const persist = (note: Note) => {
+      writes.push(note);
+    };
+
+    expect(
+      commitNewNote(
+        draft,
+        session,
+        persist,
+        () => now,
+        () => 'id-1'
+      )
+    ).toBe('saved');
+    expect(
+      commitNewNote(
+        draft,
+        session,
+        persist,
+        () => now,
+        () => 'id-2'
+      )
+    ).toBe('discarded');
+    expect(writes).toEqual([
+      {
+        id: 'id-1',
+        title: 'Una',
+        content: 'Nota',
+        createdAt: '2026-10-08T12:00:00.000Z',
+        updatedAt: '2026-10-08T12:00:00.000Z',
+      },
+    ]);
+  });
+
+  it('ignores a dismiss that starts while the first save is still running', () => {
+    const session = state();
+    let writes = 0;
+
+    const status = commitNewNote({ title: 'Una', content: '' }, session, () => {
+      writes += 1;
+      const nested = commitNewNote({ title: 'Una', content: '' }, session, () => {
+        writes += 1;
+      });
+      expect(nested).toBe('pending');
+    });
+
+    expect(status).toBe('saved');
+    expect(writes).toBe(1);
+  });
+
+  it('keeps the draft uncommitted when save throws or returns failure', () => {
+    const thrown = state();
+    expect(
+      commitNewNote({ title: 'Hola', content: 'Texto' }, thrown, () => {
+        throw new Error('disk');
+      })
+    ).toBe('failed');
+    expect(thrown).toEqual({ committed: false, pending: false });
+
+    const rejected = state();
+    expect(commitNewNote({ title: 'Hola', content: 'Texto' }, rejected, () => false)).toBe(
+      'failed'
+    );
+    expect(rejected.committed).toBe(false);
+  });
+
+  it('discards a draft that was typed and then cleared', () => {
+    const writes: Note[] = [];
+    expect(
+      commitNewNote({ title: '', content: '' }, state(), (note) => {
+        writes.push(note);
+      })
+    ).toBe('discarded');
+    expect(writes).toEqual([]);
+  });
+});
+
+describe('notesNewestFirst', () => {
+  const note = (id: string, createdAt: string): Note => ({
+    id,
+    title: id,
+    content: '',
+    createdAt,
+    updatedAt: createdAt,
+  });
+
+  it('orders notes newest first and breaks timestamp ties by later insert', () => {
+    expect(
+      notesNewestFirst([
+        note('old', '2026-10-08T10:00:00.000Z'),
+        note('same-a', '2026-10-08T12:00:00.000Z'),
+        note('same-b', '2026-10-08T12:00:00.000Z'),
+        note('mid', '2026-10-08T11:00:00.000Z'),
+      ]).map((item) => item.id)
+    ).toEqual(['same-b', 'same-a', 'mid', 'old']);
+  });
+});
