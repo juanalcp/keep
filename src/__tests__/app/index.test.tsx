@@ -3,6 +3,7 @@ import { createMMKV } from 'react-native-mmkv';
 import { act, fireEvent, renderRouter, screen } from 'expo-router/testing-library';
 import { router } from 'expo-router';
 
+import { flashListProps } from '@/src/test-utils/flashListProps';
 import * as notesRepository from '@/src/storage/notesRepository';
 
 jest.mock('nativewind', () => {
@@ -53,7 +54,7 @@ describe('creating a note from the home screen', () => {
   });
 
   it('saves a note on dismiss and drops an empty draft', async () => {
-    await renderHome();
+    const home = await renderHome();
 
     expect(screen.getByText('Keep')).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Crear una nota...' })).toBeTruthy();
@@ -121,12 +122,14 @@ describe('creating a note from the home screen', () => {
       content: 'Solo texto',
     });
 
-    const titles = screen.getAllByTestId('note-title');
-    const contents = screen.getAllByTestId('note-content');
-    expect(contents[0]).toHaveTextContent('Solo texto');
-    expect(titles[1]).toHaveTextContent('Solo título');
-    expect(titles[2]).toHaveTextContent('Compras');
-    expect(contents[2]).toHaveTextContent('leche\n pan');
+    expect(screen.getByText('Solo texto')).toBeTruthy();
+    expect(screen.getByText('Solo título')).toBeTruthy();
+    expect(screen.getByText('Compras')).toBeTruthy();
+    expect(flashListProps(home.root).data).toEqual([
+      expect.objectContaining({ title: '', content: 'Solo texto' }),
+      expect.objectContaining({ title: 'Solo título', content: '' }),
+      expect.objectContaining({ title: 'Compras', content: 'leche\n pan' }),
+    ]);
 
     await openComposer();
     await setInputValue(screen.getByPlaceholderText('Título'), 'Volver');

@@ -1,27 +1,75 @@
-import { ScrollView, View } from 'react-native';
+import { FlashList, type ListRenderItem } from '@shopify/flash-list';
+import { useCallback, useMemo } from 'react';
+import { View } from 'react-native';
 
+import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
 import { notesNewestFirst } from '@/src/notes/notesNewestFirst';
 import type { Note } from '@/src/types/Note';
 
-export function NotesList({ notes }: { notes: Note[] }) {
-  const ordered = notesNewestFirst(notes);
-  if (ordered.length === 0) {
-    return <View className="flex-1" />;
-  }
+const EMPTY_NOTES_COPY = 'Las notas que añadas aparecerán aquí';
+
+function visibleText(value: string): string | null {
+  return value.trim() === '' ? null : value;
+}
+
+function NoteCard({ note }: { note: Note }) {
+  const title = visibleText(note.title);
+  const content = visibleText(note.content);
 
   return (
-    <ScrollView className="flex-1" contentContainerClassName="gap-3 px-6 py-4">
-      {ordered.map((note) => (
-        <View key={note.id} className="rounded-lg border border-border bg-card px-4 py-3">
-          <Text testID="note-title" className="text-base font-semibold text-foreground">
-            {note.title}
+    <View className="px-1 pb-2">
+      <Card className="w-full gap-1.5 px-3 py-3">
+        {title != null ? (
+          <Text
+            testID="note-title"
+            numberOfLines={2}
+            className="text-base font-semibold leading-5 text-card-foreground">
+            {title}
           </Text>
-          <Text testID="note-content" className="mt-1 text-sm text-foreground">
-            {note.content}
+        ) : null}
+        {content != null ? (
+          <Text
+            testID="note-content"
+            numberOfLines={8}
+            className="text-sm leading-5 text-card-foreground">
+            {content}
           </Text>
-        </View>
-      ))}
-    </ScrollView>
+        ) : null}
+      </Card>
+    </View>
+  );
+}
+
+function EmptyNotes() {
+  return <Text className="px-1 py-1 text-base text-muted-foreground">{EMPTY_NOTES_COPY}</Text>;
+}
+
+export function NotesList({ notes }: { notes: Note[] }) {
+  const ordered = useMemo(
+    () =>
+      notesNewestFirst(notes).filter(
+        (note) => visibleText(note.title) != null || visibleText(note.content) != null
+      ),
+    [notes]
+  );
+
+  const renderNote = useCallback<ListRenderItem<Note>>(({ item }) => {
+    return <NoteCard note={item} />;
+  }, []);
+
+  return (
+    <View className="mx-5 min-h-0 flex-1 pt-4">
+      <FlashList
+        data={ordered}
+        masonry
+        optimizeItemArrangement
+        numColumns={2}
+        keyExtractor={(note) => note.id}
+        renderItem={renderNote}
+        ListEmptyComponent={EmptyNotes}
+        style={{ flex: 1 }}
+      />
+    </View>
   );
 }

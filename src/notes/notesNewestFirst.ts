@@ -1,13 +1,19 @@
 import type { Note } from '@/src/types/Note';
 
+function compareDescending(left: string, right: string): number {
+  if (left === right) {
+    return 0;
+  }
+
+  return left < right ? 1 : -1;
+}
+
 export function notesNewestFirst(notes: Note[]): Note[] {
-  return notes
-    .map((note, index) => ({ note, index }))
-    .sort((left, right) => {
-      if (left.note.createdAt === right.note.createdAt) {
-        return right.index - left.index;
-      }
-      return left.note.createdAt < right.note.createdAt ? 1 : -1;
-    })
-    .map(({ note }) => note);
+  return [...notes].sort((left, right) => {
+    return (
+      compareDescending(left.updatedAt, right.updatedAt) ||
+      compareDescending(left.createdAt, right.createdAt) ||
+      compareDescending(left.id, right.id)
+    );
+  });
 }
