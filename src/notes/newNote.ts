@@ -52,6 +52,7 @@ export function buildNoteFromDraft(
     content,
     createdAt: timestamp,
     updatedAt: timestamp,
+    color: 'default',
   };
 }
 

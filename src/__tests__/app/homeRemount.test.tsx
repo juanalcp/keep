@@ -32,6 +32,7 @@ describe('HomeScreen remount', () => {
       content: 'milk\n bread',
       createdAt: '2026-10-08T12:00:00.000Z',
       updatedAt: '2026-10-08T12:00:00.000Z',
+      color: 'default',
     });
 
     await renderRouter('./app', { initialUrl: '/' });

@@ -27,6 +27,7 @@
     ]
   },
   "dependencies": {
+    "@rn-primitives/popover": "1.5.2",
     "@rn-primitives/portal": "~1.4.0",
     "@rn-primitives/slot": "^1.5.2",
     "@shopify/flash-list": "2.0.2",

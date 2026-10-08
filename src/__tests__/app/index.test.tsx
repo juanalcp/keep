@@ -96,6 +96,7 @@ describe('creating a note from the home screen', () => {
     expect(saved).toMatchObject({
       title: 'Shopping',
       content: 'milk\n bread',
+      color: 'default',
     });
     expect(saved?.createdAt).toBe(saved?.updatedAt);
     expect(saved?.createdAt).toEqual(expect.stringMatching(/^\d{4}-\d{2}-\d{2}T/));
