@@ -61,9 +61,10 @@ pnpm run format
 
 ## Project layout
 
-- `app/index.tsx` is the provisional home screen at `/`.
-- `components/ui/text.tsx` is the React Native Reusables `Text` component used by that screen.
+- `app/index.tsx` is the home screen at `/`. It shows the Keep header, a "Crear una nota..." control, and a simple newest-first list of saved notes.
+- `app/new-note.tsx` is the form sheet used to write a note. Dismissing it saves the note when the title or the body has text.
+- `components/ui/text.tsx`, `components/ui/button.tsx`, `components/ui/input.tsx`, and `components/ui/textarea.tsx` are React Native Reusables components.
 - `src/types/Note.ts` defines a note: `id`, `title`, `content`, `createdAt`, and `updatedAt`, all strings. Timestamps are ISO-8601.
-- `src/storage/notesRepository.ts` is the only place that talks to MMKV. It lists, saves, and deletes notes stored as one JSON array. Callers pass a complete note; the repository does not create ids or timestamps.
+- `src/storage/notesRepository.ts` is the only place that talks to MMKV. It lists, saves, and deletes notes stored as one JSON array. Callers pass a complete note; the repository does not create ids or timestamps. The note composer calls this module and does not import MMKV.
 
 Missing or corrupt storage (absent key, invalid JSON, a non-array, or any element that is not an object with those five string fields) makes `listNotes` return an empty list. It does not throw, and it does not keep the valid items from a bad payload.

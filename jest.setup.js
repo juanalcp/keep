@@ -1,3 +1,9 @@
+jest.mock('@/global.css', () => ({}));
+
+// Dismissing the new-note form sheet more than once makes the test renderer's
+// unmount walk loop. Skip the automatic cleanup and let the process exit.
+process.env.RNTL_SKIP_AUTO_CLEANUP = 'true';
+
 const mockStores = new Map();
 
 jest.mock('react-native-mmkv', () => ({
