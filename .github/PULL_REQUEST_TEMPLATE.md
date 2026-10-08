@@ -1,7 +1,7 @@
-## Resumen
+## Summary
 
-## Evidencia
+## Evidence
 
-Incluye al menos una captura que demuestre el cambio. Puede ser de la interfaz, de un flujo o del resultado visible.
+Include at least one screenshot that shows the change. It can be the interface, a flow, or a visible result.
 
-<!-- Pega la captura aquí -->
+<!-- Paste the screenshot here -->
