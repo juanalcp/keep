@@ -1,0 +1,4 @@
+# Hoisted linker, same as create-expo-app, so native modules resolve from a flat node_modules.
+nodeLinker: hoisted
+allowBuilds:
+  unrs-resolver: true
