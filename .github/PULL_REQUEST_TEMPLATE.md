@@ -1,7 +1,5 @@
 ## Summary
 
-## Evidence
+## Checks
 
-Include at least one screenshot that shows the change. It can be the interface, a flow, or a visible result.
-
-<!-- Paste the screenshot here -->
+Describe in text how you verified the change. Do not attach screenshots or videos.
