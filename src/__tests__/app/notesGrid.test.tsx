@@ -49,7 +49,7 @@ describe('home notes masonry', () => {
     const home = await renderHome();
 
     expect(screen.getByText('Keep')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Crear una nota...' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Create a note...' })).toBeTruthy();
     expect(screen.getByText(EMPTY_NOTES_COPY)).toBeTruthy();
     expect(screen.queryByTestId('note-title')).toBeNull();
     expect(screen.queryByTestId('note-content')).toBeNull();

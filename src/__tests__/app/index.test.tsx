@@ -34,12 +34,12 @@ async function setInputValue(
 }
 
 async function openComposer() {
-  await fireEvent.press(screen.getByRole('button', { name: 'Crear una nota...' }));
-  expect(screen.getByPlaceholderText('Título')).toBeTruthy();
+  await fireEvent.press(screen.getByRole('button', { name: 'Create a note...' }));
+  expect(screen.getByPlaceholderText('Title')).toBeTruthy();
 }
 
 async function closeComposer() {
-  await fireEvent.press(screen.getByRole('button', { name: 'Cerrar' }));
+  await fireEvent.press(screen.getByRole('button', { name: 'Close' }));
 }
 
 describe('creating a note from the home screen', () => {
@@ -57,99 +57,99 @@ describe('creating a note from the home screen', () => {
     const home = await renderHome();
 
     expect(screen.getByText('Keep')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Crear una nota...' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Create a note...' })).toBeTruthy();
     expect(screen.queryByTestId('note-title')).toBeNull();
 
     await openComposer();
     await closeComposer();
     expect(notesRepository.listNotes()).toEqual([]);
-    expect(screen.getByText('Crear una nota...')).toBeTruthy();
+    expect(screen.getByText('Create a note...')).toBeTruthy();
     expect(screen.queryByTestId('note-title')).toBeNull();
 
     await openComposer();
-    await setInputValue(screen.getByPlaceholderText('Título'), '   \n');
-    await setInputValue(screen.getByLabelText('Contenido'), ' \n\n  ');
+    await setInputValue(screen.getByPlaceholderText('Title'), '   \n');
+    await setInputValue(screen.getByLabelText('Content'), ' \n\n  ');
     await closeComposer();
     expect(notesRepository.listNotes()).toEqual([]);
 
     await openComposer();
-    await setInputValue(screen.getByPlaceholderText('Título'), 'Borrador');
-    await setInputValue(screen.getByLabelText('Contenido'), 'Texto');
-    await setInputValue(screen.getByPlaceholderText('Título'), '   ');
-    await setInputValue(screen.getByLabelText('Contenido'), '\n');
+    await setInputValue(screen.getByPlaceholderText('Title'), 'Draft');
+    await setInputValue(screen.getByLabelText('Content'), 'Text');
+    await setInputValue(screen.getByPlaceholderText('Title'), '   ');
+    await setInputValue(screen.getByLabelText('Content'), '\n');
     await closeComposer();
     expect(notesRepository.listNotes()).toEqual([]);
-    expect(screen.queryByText('Borrador')).toBeNull();
+    expect(screen.queryByText('Draft')).toBeNull();
 
     await openComposer();
-    await setInputValue(screen.getByPlaceholderText('Título'), '  Compras  ');
-    await setInputValue(screen.getByLabelText('Contenido'), '  leche\n pan  ');
+    await setInputValue(screen.getByPlaceholderText('Title'), '  Shopping  ');
+    await setInputValue(screen.getByLabelText('Content'), '  milk\n bread  ');
     await closeComposer();
 
-    expect(screen.getByText('Crear una nota...')).toBeTruthy();
-    expect(screen.queryByPlaceholderText('Título')).toBeNull();
-    expect(screen.getByTestId('note-title')).toHaveTextContent('Compras');
-    expect(screen.getByTestId('note-content')).toHaveTextContent('leche\n pan');
+    expect(screen.getByText('Create a note...')).toBeTruthy();
+    expect(screen.queryByPlaceholderText('Title')).toBeNull();
+    expect(screen.getByTestId('note-title')).toHaveTextContent('Shopping');
+    expect(screen.getByTestId('note-content')).toHaveTextContent('milk\n bread');
 
     const [saved] = notesRepository.listNotes();
     expect(notesRepository.listNotes()).toHaveLength(1);
     expect(saved).toMatchObject({
-      title: 'Compras',
-      content: 'leche\n pan',
+      title: 'Shopping',
+      content: 'milk\n bread',
     });
     expect(saved?.createdAt).toBe(saved?.updatedAt);
     expect(saved?.createdAt).toEqual(expect.stringMatching(/^\d{4}-\d{2}-\d{2}T/));
     expect(saved?.id).toEqual(expect.any(String));
-    expect(saved?.id).not.toBe('Compras');
+    expect(saved?.id).not.toBe('Shopping');
 
     await openComposer();
-    await setInputValue(screen.getByPlaceholderText('Título'), 'Solo título');
+    await setInputValue(screen.getByPlaceholderText('Title'), 'Title only');
     await closeComposer();
 
     await openComposer();
-    await setInputValue(screen.getByLabelText('Contenido'), 'Solo texto');
+    await setInputValue(screen.getByLabelText('Content'), 'Text only');
     await closeComposer();
 
     const notes = notesRepository.listNotes();
     expect(notes).toHaveLength(3);
     expect(new Set(notes.map((note) => note.id)).size).toBe(3);
-    expect(notes.find((note) => note.title === 'Solo título')).toMatchObject({
-      title: 'Solo título',
+    expect(notes.find((note) => note.title === 'Title only')).toMatchObject({
+      title: 'Title only',
       content: '',
     });
-    expect(notes.find((note) => note.content === 'Solo texto')).toMatchObject({
+    expect(notes.find((note) => note.content === 'Text only')).toMatchObject({
       title: '',
-      content: 'Solo texto',
+      content: 'Text only',
     });
 
-    expect(screen.getByText('Solo texto')).toBeTruthy();
-    expect(screen.getByText('Solo título')).toBeTruthy();
-    expect(screen.getByText('Compras')).toBeTruthy();
+    expect(screen.getByText('Text only')).toBeTruthy();
+    expect(screen.getByText('Title only')).toBeTruthy();
+    expect(screen.getByText('Shopping')).toBeTruthy();
     expect(flashListProps(home.root).data).toEqual([
-      expect.objectContaining({ title: '', content: 'Solo texto' }),
-      expect.objectContaining({ title: 'Solo título', content: '' }),
-      expect.objectContaining({ title: 'Compras', content: 'leche\n pan' }),
+      expect.objectContaining({ title: '', content: 'Text only' }),
+      expect.objectContaining({ title: 'Title only', content: '' }),
+      expect.objectContaining({ title: 'Shopping', content: 'milk\n bread' }),
     ]);
 
     await openComposer();
-    await setInputValue(screen.getByPlaceholderText('Título'), 'Volver');
+    await setInputValue(screen.getByPlaceholderText('Title'), 'Back');
     await act(async () => {
       router.back();
     });
-    expect(screen.queryByPlaceholderText('Título')).toBeNull();
-    expect(notesRepository.listNotes().map((note) => note.title)).toContain('Volver');
+    expect(screen.queryByPlaceholderText('Title')).toBeNull();
+    expect(notesRepository.listNotes().map((note) => note.title)).toContain('Back');
 
     await openComposer();
-    await setInputValue(screen.getByPlaceholderText('Título'), 'Compras');
-    await setInputValue(screen.getByLabelText('Contenido'), 'Leche');
+    await setInputValue(screen.getByPlaceholderText('Title'), 'Shopping');
+    await setInputValue(screen.getByLabelText('Content'), 'Milk');
     jest.spyOn(notesRepository, 'saveNote').mockImplementation(() => {
       throw new Error('save failed');
     });
     await closeComposer();
 
-    expect(screen.getByDisplayValue('Compras')).toBeTruthy();
-    expect(screen.getByDisplayValue('Leche')).toBeTruthy();
-    expect(screen.getByRole('button', { name: 'Cerrar' })).toBeTruthy();
+    expect(screen.getByDisplayValue('Shopping')).toBeTruthy();
+    expect(screen.getByDisplayValue('Milk')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Close' })).toBeTruthy();
     expect(notesRepository.listNotes()).toHaveLength(4);
   });
 });

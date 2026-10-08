@@ -61,7 +61,7 @@ pnpm run format
 
 ## Project layout
 
-- `app/index.tsx` is the home screen at `/`. It shows the Keep header, a "Crear una nota..." control, and a simple newest-first list of saved notes.
+- `app/index.tsx` is the home screen at `/`. It shows the Keep header, a "Create a note..." control, and a simple newest-first list of saved notes.
 - `app/new-note.tsx` is the form sheet used to write a note. Dismissing it saves the note when the title or the body has text.
 - `components/ui/text.tsx`, `components/ui/button.tsx`, `components/ui/input.tsx`, and `components/ui/textarea.tsx` are React Native Reusables components.
 - `src/types/Note.ts` defines a note: `id`, `title`, `content`, `createdAt`, and `updatedAt`, all strings. Timestamps are ISO-8601.

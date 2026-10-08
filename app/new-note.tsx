@@ -49,8 +49,8 @@ export default function NewNoteScreen() {
         <View className="flex-1 gap-3 px-4 pt-4">
           <Input
             autoFocus
-            accessibilityLabel="Título"
-            placeholder="Título"
+            accessibilityLabel="Title"
+            placeholder="Title"
             value={title}
             onChangeText={(value) => {
               titleRef.current = value;
@@ -58,7 +58,7 @@ export default function NewNoteScreen() {
             }}
           />
           <Textarea
-            accessibilityLabel="Contenido"
+            accessibilityLabel="Content"
             className="min-h-40 flex-1"
             scrollEnabled
             value={content}
@@ -77,7 +77,7 @@ export default function NewNoteScreen() {
               }
               router.back();
             }}>
-            <Text>Cerrar</Text>
+            <Text>Close</Text>
           </Button>
         </View>
       </KeyboardAvoidingView>
