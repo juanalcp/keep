@@ -6,30 +6,36 @@ import { ThemeProvider } from 'expo-router/react-navigation';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'nativewind';
 import * as React from 'react';
-import { Appearance } from 'react-native';
+import { Appearance, Platform } from 'react-native';
 
 import { NAV_THEME } from '@/lib/theme';
 
 export { ErrorBoundary } from 'expo-router';
 
-function toColorScheme(scheme: string | null | undefined): 'light' | 'dark' {
-  return scheme === 'dark' ? 'dark' : 'light';
-}
-
 export default function RootLayout() {
   const { colorScheme, setColorScheme } = useColorScheme();
 
   React.useEffect(() => {
-    const apply = (scheme: string | null | undefined) => {
-      setColorScheme(toColorScheme(scheme));
-    };
+    // NativeWind treats an explicit light/dark scheme as an Appearance override, so later
+    // system changes never reach the app. "system" stays in follow-system mode.
+    // Web class dark mode drops the dark class for "system", and that platform does not
+    // override Appearance, so sync only a real light/dark reading there.
+    if (Platform.OS === 'web') {
+      const apply = (scheme: string | null | undefined) => {
+        if (scheme === 'light' || scheme === 'dark') {
+          setColorScheme(scheme);
+        }
+      };
 
-    apply(Appearance.getColorScheme());
-    const subscription = Appearance.addChangeListener(({ colorScheme: next }) => {
-      apply(next);
-    });
+      apply(Appearance.getColorScheme());
+      const subscription = Appearance.addChangeListener(({ colorScheme: next }) => {
+        apply(next);
+      });
 
-    return () => subscription.remove();
+      return () => subscription.remove();
+    }
+
+    setColorScheme('system');
     // The setter from this render keeps working, and including it would resubscribe every update.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
