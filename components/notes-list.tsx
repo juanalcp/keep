@@ -1,9 +1,12 @@
 import { FlashList, type ListRenderItem } from '@shopify/flash-list';
+import { useRouter } from 'expo-router';
 import { useCallback, useMemo } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { Card } from '@/components/ui/card';
 import { Text } from '@/components/ui/text';
+import { cn } from '@/lib/utils';
+import { noteBackgroundClass } from '@/src/notes/noteColors';
 import { notesNewestFirst } from '@/src/notes/notesNewestFirst';
 import type { Note } from '@/src/types/Note';
 
@@ -14,12 +17,19 @@ function visibleText(value: string): string | null {
 }
 
 function NoteCard({ note }: { note: Note }) {
+  const router = useRouter();
   const title = visibleText(note.title);
   const content = visibleText(note.content);
 
   return (
-    <View className="px-1 pb-2">
-      <Card className="w-full gap-1.5 px-3 py-3">
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={title != null ? `Open note, ${title}` : 'Open note'}
+      className="px-1 pb-2"
+      onPress={() => router.push({ pathname: '/note/[id]', params: { id: note.id } })}>
+      <Card
+        testID="note-card"
+        className={cn('w-full gap-1.5 px-3 py-3', noteBackgroundClass(note.color))}>
         {title != null ? (
           <Text
             testID="note-title"
@@ -37,7 +47,7 @@ function NoteCard({ note }: { note: Note }) {
           </Text>
         ) : null}
       </Card>
-    </View>
+    </Pressable>
   );
 }
 

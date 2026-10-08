@@ -9,6 +9,7 @@ const note = (overrides: Partial<Note> = {}): Note => ({
   content: 'Test content',
   createdAt: '2026-10-08T00:00:00.000Z',
   updatedAt: '2026-10-08T00:00:00.000Z',
+  color: 'default',
   ...overrides,
 });
 
@@ -101,5 +102,63 @@ describe('notesRepository', () => {
 
     expect(() => listNotes()).not.toThrow();
     expect(listNotes()).toEqual([]);
+  });
+
+  it('stores a note color and returns it on the next load', () => {
+    saveNote(note({ color: 'blue' }));
+
+    expect(listNotes()).toEqual([note({ color: 'blue' })]);
+    expect(JSON.parse(createMMKV().getString('notes') ?? '[]')[0].color).toBe('blue');
+  });
+
+  it('loads a note saved without color as default and keeps its title and text', () => {
+    const legacy = {
+      id: 'legacy',
+      title: 'Antes del color',
+      content: 'Sigue aquí',
+      createdAt: '2026-10-08T00:00:00.000Z',
+      updatedAt: '2026-10-08T00:00:00.000Z',
+    };
+    createMMKV().set('notes', JSON.stringify([legacy]));
+
+    expect(listNotes()).toEqual([{ ...legacy, color: 'default' }]);
+    expect(JSON.parse(createMMKV().getString('notes') ?? '[]')).toEqual([legacy]);
+  });
+
+  it('loads an unrecognized color as default without throwing or rewriting storage', () => {
+    const stored = {
+      id: 'odd',
+      title: 'Rara',
+      content: 'Texto',
+      createdAt: '2026-10-08T00:00:00.000Z',
+      updatedAt: '2026-10-08T00:00:00.000Z',
+      color: 'magenta',
+    };
+    createMMKV().set('notes', JSON.stringify([stored]));
+
+    expect(() => listNotes()).not.toThrow();
+    expect(listNotes()).toEqual([{ ...stored, color: 'default' }]);
+    expect(JSON.parse(createMMKV().getString('notes') ?? '[]')).toEqual([stored]);
+  });
+
+  it('does not add color to a legacy note when another note is saved or deleted', () => {
+    const legacy = {
+      id: 'legacy',
+      title: 'Vieja',
+      content: 'Cuerpo',
+      createdAt: '2026-10-08T00:00:00.000Z',
+      updatedAt: '2026-10-08T00:00:00.000Z',
+    };
+    createMMKV().set('notes', JSON.stringify([legacy]));
+
+    saveNote(note({ id: 'fresh', color: 'green' }));
+    deleteNote('missing');
+
+    const raw = JSON.parse(createMMKV().getString('notes') ?? '[]') as {
+      id: string;
+      color?: string;
+    }[];
+    expect(raw.find((item) => item.id === 'legacy')?.color).toBeUndefined();
+    expect(listNotes().find((item) => item.id === 'legacy')?.color).toBe('default');
   });
 });

@@ -23,6 +23,7 @@ describe('buildNoteFromDraft', () => {
       content: 'line\n  two',
       createdAt: '2026-10-08T12:00:00.000Z',
       updatedAt: '2026-10-08T12:00:00.000Z',
+      color: 'default',
     });
   });
 
@@ -96,6 +97,7 @@ describe('commitNewNote', () => {
         content: 'Note',
         createdAt: '2026-10-08T12:00:00.000Z',
         updatedAt: '2026-10-08T12:00:00.000Z',
+        color: 'default',
       },
     ]);
   });
@@ -149,6 +151,7 @@ describe('notesNewestFirst', () => {
     content: '',
     createdAt: '2026-10-08T10:00:00.000Z',
     updatedAt: '2026-10-08T10:00:00.000Z',
+    color: 'default',
     ...overrides,
   });
 

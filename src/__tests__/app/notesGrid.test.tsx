@@ -26,6 +26,7 @@ function note(overrides: Partial<Note> & Pick<Note, 'id'>): Note {
     content: 'Contenido',
     createdAt: '2026-10-08T10:00:00.000Z',
     updatedAt: '2026-10-08T10:00:00.000Z',
+    color: 'default',
     ...overrides,
   };
 }

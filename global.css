@@ -28,6 +28,24 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --note-red: 0 86% 92%;
+    --note-red-dark: 0 38% 24%;
+    --note-orange: 28 95% 88%;
+    --note-orange-dark: 28 40% 24%;
+    --note-yellow: 50 100% 82%;
+    --note-yellow-dark: 48 35% 22%;
+    --note-green: 130 55% 86%;
+    --note-green-dark: 140 28% 22%;
+    --note-blue: 214 85% 90%;
+    --note-blue-dark: 214 38% 24%;
+    --note-purple: 270 60% 91%;
+    --note-purple-dark: 270 28% 26%;
+    --note-pink: 330 80% 92%;
+    --note-pink-dark: 330 32% 24%;
+    --note-brown: 25 42% 84%;
+    --note-brown-dark: 25 25% 22%;
+    --note-gray: 220 8% 88%;
+    --note-gray-dark: 220 6% 28%;
   }
 
   .dark:root {

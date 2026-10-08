@@ -1,11 +1,21 @@
 import { createMMKV } from 'react-native-mmkv';
 
+import { normalizeNoteColor } from '@/src/notes/noteColors';
 import type { Note } from '@/src/types/Note';
 
 const NOTES_KEY = 'notes';
 const storage = createMMKV();
 
-function isValidNote(value: unknown): value is Note {
+type StoredNote = {
+  id: string;
+  title: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  color?: unknown;
+};
+
+function isStoredNote(value: unknown): value is StoredNote {
   if (value === null || typeof value !== 'object' || Array.isArray(value)) {
     return false;
   }
@@ -20,35 +30,52 @@ function isValidNote(value: unknown): value is Note {
   );
 }
 
-function loadNotes(): Note[] {
+function toNote(note: StoredNote): Note {
+  return {
+    id: note.id,
+    title: note.title,
+    content: note.content,
+    createdAt: note.createdAt,
+    updatedAt: note.updatedAt,
+    color: normalizeNoteColor(note.color),
+  };
+}
+
+function readStoredNotes(): { status: 'ok'; notes: unknown[] } | { status: 'invalid' } {
   try {
     const raw = storage.getString(NOTES_KEY);
     if (raw == null) {
-      return [];
+      return { status: 'ok', notes: [] };
     }
 
     const parsed: unknown = JSON.parse(raw);
-    if (!Array.isArray(parsed) || !parsed.every(isValidNote)) {
-      return [];
+    if (!Array.isArray(parsed) || !parsed.every(isStoredNote)) {
+      return { status: 'invalid' };
     }
 
-    return parsed;
+    return { status: 'ok', notes: parsed };
   } catch {
-    return [];
+    return { status: 'invalid' };
   }
 }
 
-function saveNotes(notes: Note[]): void {
+function saveNotes(notes: unknown[]): void {
   storage.set(NOTES_KEY, JSON.stringify(notes));
 }
 
 export function listNotes(): Note[] {
-  return loadNotes();
+  const stored = readStoredNotes();
+  if (stored.status !== 'ok') {
+    return [];
+  }
+
+  return stored.notes.filter(isStoredNote).map(toNote);
 }
 
 export function saveNote(note: Note): void {
-  const notes = loadNotes();
-  const existingIndex = notes.findIndex((stored) => stored.id === note.id);
+  const stored = readStoredNotes();
+  const notes = stored.status === 'ok' ? stored.notes : [];
+  const existingIndex = notes.findIndex((item) => isStoredNote(item) && item.id === note.id);
 
   if (existingIndex >= 0) {
     notes[existingIndex] = note;
@@ -60,9 +87,13 @@ export function saveNote(note: Note): void {
 }
 
 export function deleteNote(id: string): void {
-  const notes = loadNotes();
-  const remaining = notes.filter((note) => note.id !== id);
-  if (remaining.length === notes.length) {
+  const stored = readStoredNotes();
+  if (stored.status !== 'ok') {
+    return;
+  }
+
+  const remaining = stored.notes.filter((item) => !(isStoredNote(item) && item.id === id));
+  if (remaining.length === stored.notes.length) {
     return;
   }
 
