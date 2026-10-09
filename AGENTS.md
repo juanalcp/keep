@@ -89,6 +89,14 @@ Any change to the interface, layout, styles, routes, client state, or rendered d
 3. Walk the affected flow the way someone on a phone would: tap, type, submit, and navigate. Also check routes that share the touched state or components, the empty state, and the error state (including an unknown route).
 4. Confirm that the «Keep» header, the background, and the content area read at that width, with no horizontal overflow.
 
+## Cursor Cloud specific instructions
+
+This environment is a Linux VM. It installs dependencies and runs lint, typecheck, and Jest. It cannot compile or launch the iOS simulator or the Android emulator.
+
+On boot, the web app is started with `pnpm exec expo start --web --localhost`. Open `http://localhost:8081`. Metro listens on IPv6 localhost, so `http://127.0.0.1:8081` does not connect. If nothing is listening, run `pnpm run web` from the repo root. Node.js 22 and pnpm 10.33.3 are on `PATH`.
+
+Browser checks still use a viewport about 390×844. In that web session, a note with a title or a body is saved when the composer closes, and the card shows on the home screen.
+
 ## Pull requests
 
 Describe the change and the check in text. Do not include images, screenshots, recordings, or HTML image or video tags in the pull request body. That evidence slows the work down and is not part of the delivery.
