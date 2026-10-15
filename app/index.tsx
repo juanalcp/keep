@@ -25,7 +25,7 @@ export default function HomeScreen() {
       </View>
       <Pressable
         accessibilityRole="button"
-        className="mx-6 mt-4 rounded-lg border border-input bg-card px-4 py-3"
+        className="mx-6 mt-4 min-h-11 justify-center rounded-lg border border-input bg-card px-4 py-3"
         onPress={() => router.push('/new-note')}>
         <Text className="text-base text-muted-foreground">Create a note...</Text>
       </Pressable>

@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T21:10:00.000Z",
+  "title": "Design System: Keep",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "hsl(0 0% 100%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "ink": {
+        "role": "primary",
+        "displayName": "Ink",
+        "canonical": "hsl(0 0% 9%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft ink",
+        "canonical": "hsl(0 0% 3.9%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "paper-soft": {
+        "role": "primary",
+        "displayName": "Soft paper",
+        "canonical": "hsl(0 0% 98%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "mist": {
+        "role": "neutral",
+        "displayName": "Mist",
+        "canonical": "hsl(0 0% 96.1%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "hsl(0 0% 45.1%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "hairline": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "hsl(0 0% 89.8%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus",
+        "canonical": "hsl(0 0% 63%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "signal": {
+        "role": "destructive",
+        "displayName": "Signal red",
+        "canonical": "hsl(0 84.2% 60.2%)",
+        "tonalRamp": ["oklch(15% 0.21 25)", "oklch(26% 0.21 25)", "oklch(38% 0.21 25)", "oklch(49% 0.21 25)", "oklch(61% 0.21 25)", "oklch(72% 0.21 25)", "oklch(84% 0.21 25)", "oklch(95% 0.21 25)"]
+      },
+      "night-raised": {
+        "role": "neutral",
+        "displayName": "Night raised",
+        "canonical": "hsl(0 0% 14.9%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "night-graphite": {
+        "role": "neutral",
+        "displayName": "Night graphite",
+        "canonical": "hsl(0 0% 63.9%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      },
+      "night-signal": {
+        "role": "destructive",
+        "displayName": "Night signal",
+        "canonical": "hsl(0 70.9% 59.4%)",
+        "tonalRamp": ["oklch(15% 0.17 25)", "oklch(26% 0.17 25)", "oklch(38% 0.17 25)", "oklch(49% 0.17 25)", "oklch(61% 0.17 25)", "oklch(72% 0.17 25)", "oklch(84% 0.17 25)", "oklch(95% 0.17 25)"]
+      },
+      "night-focus": {
+        "role": "neutral",
+        "displayName": "Night focus",
+        "canonical": "hsl(300 0% 45%)",
+        "tonalRamp": ["oklch(15% 0 0)", "oklch(26% 0 0)", "oklch(38% 0 0)", "oklch(49% 0 0)", "oklch(61% 0 0)", "oklch(72% 0 0)", "oklch(84% 0 0)", "oklch(95% 0 0)"]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "The screen name, left aligned. Home uses it for Keep."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "The note card title, two lines at most."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Composer fields and the unknown-route message."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Button labels. Note body copy uses the same size at weight 400."
+      }
+    },
+    "shadows": [
+      {
+        "name": "resting-lift",
+        "value": "0 1px 2px rgb(0 0 0 / 0.05)",
+        "purpose": "Cards, inputs, and filled buttons at rest."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default filled action. Ink on soft paper, 40px tall.",
+      "html": "<button class=\"ds-btn-primary\">Close</button>",
+      "css": ".ds-btn-primary { background: hsl(0 0% 9%); color: hsl(0 0% 98%); height: 40px; padding: 8px 16px; border: none; border-radius: 8px; font-family: system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 1.25rem; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-btn-primary:hover, .ds-btn-primary:active { background: hsl(0 0% 9% / 0.9); } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    },
+    {
+      "name": "Large Button",
+      "kind": "button",
+      "refersTo": "button-large",
+      "description": "The composer Close control. Same primary colours at 44px.",
+      "html": "<button class=\"ds-btn-large\">Close</button>",
+      "css": ".ds-btn-large { background: hsl(0 0% 9%); color: hsl(0 0% 98%); height: 44px; padding: 8px 24px; border: none; border-radius: 8px; font-family: system-ui, sans-serif; font-size: 14px; font-weight: 500; line-height: 1.25rem; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-btn-large:hover, .ds-btn-large:active { background: hsl(0 0% 9% / 0.9); } .ds-btn-large:focus-visible { outline: none; box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet filled action on mist.",
+      "html": "<button class=\"ds-btn-secondary\">Secondary</button>",
+      "css": ".ds-btn-secondary { background: hsl(0 0% 96.1%); color: hsl(0 0% 9%); height: 40px; padding: 8px 16px; border: none; border-radius: 8px; font-family: system-ui, sans-serif; font-size: 14px; font-weight: 500; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-btn-secondary:hover, .ds-btn-secondary:active { background: hsl(0 0% 96.1% / 0.8); } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Paper fill with a hairline border.",
+      "html": "<button class=\"ds-btn-outline\">Outline</button>",
+      "css": ".ds-btn-outline { background: hsl(0 0% 100%); color: hsl(0 0% 3.9%); height: 40px; padding: 8px 16px; border: 1px solid hsl(0 0% 89.8%); border-radius: 8px; font-family: system-ui, sans-serif; font-size: 14px; font-weight: 500; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-btn-outline:hover, .ds-btn-outline:active { background: hsl(0 0% 96.1%); } .ds-btn-outline:focus-visible { outline: none; box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    },
+    {
+      "name": "Destructive Button",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Signal red. The only hue in the system. Not used on a shipping screen.",
+      "html": "<button class=\"ds-btn-destructive\">Delete</button>",
+      "css": ".ds-btn-destructive { background: hsl(0 84.2% 60.2%); color: hsl(0 0% 100%); height: 40px; padding: 8px 16px; border: none; border-radius: 8px; font-family: system-ui, sans-serif; font-size: 14px; font-weight: 500; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-btn-destructive:hover, .ds-btn-destructive:active { background: hsl(0 84.2% 60.2% / 0.9); } .ds-btn-destructive:focus-visible { outline: none; box-shadow: 0 0 0 3px hsl(0 84.2% 60.2% / 0.2); }"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Single-line field. Placeholder stays on graphite.",
+      "html": "<input class=\"ds-input\" placeholder=\"Title\" />",
+      "css": ".ds-input { box-sizing: border-box; width: 240px; height: 40px; padding: 4px 12px; background: hsl(0 0% 100%); color: hsl(0 0% 3.9%); border: 1px solid hsl(0 0% 89.8%); border-radius: 8px; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.25rem; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-input::placeholder { color: hsl(0 0% 45.1%); } .ds-input:focus-visible { outline: none; border-color: hsl(0 0% 63%); box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    },
+    {
+      "name": "Textarea",
+      "kind": "input",
+      "refersTo": "textarea",
+      "description": "The note body. Grows with the sheet.",
+      "html": "<textarea class=\"ds-textarea\" placeholder=\"Note\"></textarea>",
+      "css": ".ds-textarea { box-sizing: border-box; width: 240px; min-height: 96px; padding: 8px 12px; background: transparent; color: hsl(0 0% 3.9%); border: 1px solid hsl(0 0% 89.8%); border-radius: 8px; font-family: system-ui, sans-serif; font-size: 16px; line-height: 1.25rem; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); } .ds-textarea::placeholder { color: hsl(0 0% 45.1%); } .ds-textarea:focus-visible { outline: none; border-color: hsl(0 0% 63%); box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    },
+    {
+      "name": "Note Card",
+      "kind": "card",
+      "refersTo": "note-card",
+      "description": "A saved note. Title up to two lines, body up to eight.",
+      "html": "<article class=\"ds-note\"><h3>Shopping</h3><p>milk<br>bread</p></article>",
+      "css": ".ds-note { width: 160px; padding: 12px; background: hsl(0 0% 100%); color: hsl(0 0% 3.9%); border: 1px solid hsl(0 0% 89.8%); border-radius: 12px; box-shadow: 0 1px 2px rgb(0 0 0 / 0.05); font-family: system-ui, sans-serif; } .ds-note h3 { margin: 0 0 6px; font-size: 16px; font-weight: 600; line-height: 1.25rem; } .ds-note p { margin: 0; font-size: 14px; font-weight: 400; line-height: 1.25rem; }"
+    },
+    {
+      "name": "Composer Trigger",
+      "kind": "custom",
+      "refersTo": "composer-trigger",
+      "description": "Opens the note sheet from home.",
+      "html": "<button class=\"ds-trigger\">Create a note...</button>",
+      "css": ".ds-trigger { min-height: 44px; padding: 12px 16px; background: hsl(0 0% 100%); color: hsl(0 0% 45.1%); border: 1px solid hsl(0 0% 89.8%); border-radius: 10px; font-family: system-ui, sans-serif; font-size: 16px; font-weight: 400; line-height: 1.25rem; text-align: left; } .ds-trigger:hover, .ds-trigger:active { background: hsl(0 0% 96.1%); } .ds-trigger:focus-visible { outline: none; box-shadow: 0 0 0 3px hsl(0 0% 63% / 0.5); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Quiet Index Card",
+    "overview": "Assumption: this name was not chosen in an interview. It describes the interface that is already shipping. Home is a white (or near-black) index. Each note is a small card. The words on the card are the colour. Chrome stays out of the way.\n\nThe system is the React Native Reusables new-york preset on a neutral base: achromatic surfaces, a hairline border, and a shadow so light it barely lifts the card. Density is comfortable on a phone, not compact. The only strong weight is the screen title. Everything else is body or label.\n\nDark mode is the same structure with the surfaces inverted, not a second palette. A fluent iPhone user should recognise a large title, a sheet for writing, and safe areas. The controls are the shared button and field components, not a custom iOS kit.",
+    "keyCharacteristics": [
+      "Monochrome surfaces. Hue is reserved for a destructive action.",
+      "The note's own words are the card. No icon, no metadata row, no colour chip.",
+      "Hairline borders do the separating. Shadows stay at the smallest step.",
+      "One large left-aligned title per top-level screen.",
+      "Writing happens in a sheet. Leaving the sheet is what saves."
+    ],
+    "rules": [
+      {
+        "name": "The One Chromatic Rule",
+        "body": "Signal red (`colors.signal` in light, `colors.night-signal` in dark) is the only hue. It is the destructive button. It is not a link colour, a pin, or a note background.",
+        "section": "colors"
+      },
+      {
+        "name": "The Left Title Rule",
+        "body": "The screen name sits on the left, at the headline size above. Do not center it, and do not put a second line above it.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline Rule",
+        "body": "A 1px border is the separator. Do not stack a second shadow style, and do not drop the border in favour of a larger shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep body and secondary text on graphite or night graphite. Those steps clear ordinary reading contrast on paper and on soft ink.",
+      "Do give every control at least 44px of height. The composer trigger and Close already do.",
+      "Do save when the sheet dismisses, and keep the grabber. The sheet is the composer.",
+      "Do follow the system appearance. Light and dark are both first-class."
+    ],
+    "donts": [
+      "Don't introduce a second hue, a gradient, a glass blur, or a display webfont. The index stays quiet.",
+      "Don't colour a note with a Keep palette color until that colour is a token in this file.",
+      "Don't center the screen title or add a kicker above it.",
+      "Don't replace the masonry card with an icon-and-heading tile. The card's content is the note.",
+      "Don't invent a tab bar for a single index."
+    ]
+  }
+}
