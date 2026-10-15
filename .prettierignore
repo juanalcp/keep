@@ -4,3 +4,4 @@ dist
 web-build
 coverage
 pnpm-lock.yaml
+.cursor

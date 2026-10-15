@@ -20,7 +20,7 @@ function Input({
             'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
             'selection:bg-primary selection:text-primary-foreground'
           ),
-          native: 'placeholder:text-muted-foreground/50',
+          native: 'placeholder:text-muted-foreground',
         }),
         className
       )}

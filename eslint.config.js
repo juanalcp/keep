@@ -13,6 +13,14 @@ module.exports = [
     },
   },
   {
-    ignores: ['node_modules/', '.expo/', 'dist/', 'web-build/', 'coverage/'],
+    ignores: [
+      'node_modules/',
+      '.expo/',
+      'dist/',
+      'web-build/',
+      'coverage/',
+      '.cursor/skills/**',
+      '.cursor/agents/**',
+    ],
   },
 ];

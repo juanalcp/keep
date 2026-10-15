@@ -68,3 +68,14 @@ pnpm run format
 - `src/storage/notesRepository.ts` is the only place that talks to MMKV. It lists, saves, and deletes notes stored as one JSON array. Callers pass a complete note; the repository does not create ids or timestamps. The note composer calls this module and does not import MMKV.
 
 Missing or corrupt storage (absent key, invalid JSON, a non-array, or any element that is not an object with those five string fields) makes `listNotes` return an empty list. It does not throw, and it does not keep the valid items from a bad payload.
+
+## Impeccable
+
+This repository uses [Impeccable](https://impeccable.style) so Cursor agents share one design skill. The project install is `.cursor/skills/impeccable`, with agents under `.cursor/agents` and the edit hook in `.cursor/hooks.json`.
+
+- `PRODUCT.md` records who Keep is for, what it is for, and which facts are still assumptions.
+- `DESIGN.md` records the visual system currently in the code. `.impeccable/design.json` is the sidecar Live mode reads.
+- In Cursor, type `/impeccable` and then a command. `init` refreshes `PRODUCT.md`. `document` refreshes `DESIGN.md` from the code. `audit` and `polish` review a screen. The skill file lists the rest.
+- From a terminal, `npx impeccable detect app components` runs the deterministic anti-pattern checks on the UI.
+
+Read `PRODUCT.md` and `DESIGN.md` before changing the interface.
